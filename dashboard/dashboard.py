@@ -64,7 +64,7 @@ plt.suptitle('Hubungan Linear Antara PM2.5 & PM10 vs Faktor Meteorologis', fonts
 plt.tight_layout()
 st.pyplot(plt)
 st.markdown("""
-        PM2.5 dan PM10 menunjukkan korelasi linear positif dengan DEWP, di mana peningkatan titik embun berhubungan dengan meningkatnya konsentrasi partikel polutan. Scatter plot menunjukkan pola linear ini, meskipun sebagian besar nilai terkonsentrasi di bawah 400 µg/m³. Peningkatan titik embun dapat memengaruhi proses kondensasi dan adsorpsi partikel polutan di udara, sehingga berkontribusi pada konsentrasi polutan yang lebih tinggi.  
+        PM2.5 dan PM10 menunjukkan kecenderungan korelasi linear positif dengan DEWP, di mana peningkatan titik embun berhubungan dengan meningkatnya konsentrasi partikel polutan. Scatter plot menunjukkan pola linear ini, meskipun sebagian besar nilai terkonsentrasi di bawah 400 µg/m³. Peningkatan titik embun dapat memengaruhi proses kondensasi dan adsorpsi partikel polutan di udara, sehingga berkontribusi pada konsentrasi polutan yang lebih tinggi.  
 
         Sementara itu, PM2.5 dan PM10 memiliki korelasi linear negatif dengan WSPM, di mana semakin tinggi kecepatan angin, semakin rendah konsentrasi polutan. Scatter plot menunjukkan bahwa angin berperan dalam penyebaran polutan dengan menentukan arah dan seberapa jauh pencemar terbawa. Menurut penelitian Hakiki (2008), peningkatan kecepatan angin mempercepat penyebaran polutan, menyebabkan konsentrasinya lebih rendah di area yang lebih jauh dari sumber pencemaran.   
 """)
@@ -79,11 +79,15 @@ plt.figure(figsize=(12, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', mask=mask) 
 st.pyplot(plt)
 st.markdown("""
-        Faktor meteorologis memiliki hubungan yang erat dengan polutan seperti PM2.5, PM10, CO, SO2, dan NO2. CO menunjukkan korelasi kuat dengan PM2.5 (0.77), PM10 (0.69), SO2 (0.52), dan NO2 (0.69), menunjukkan bahwa CO berperan dalam peningkatan polusi udara. NO2 juga memiliki hubungan signifikan dengan PM2.5 (0.66), PM10 (0.65), dan SO2 (0.49), mengindikasikan bahwa NO2 berkontribusi pada peningkatan polutan lainnya. Faktor meteorologis seperti tekanan udara (PRES) juga berpengaruh terhadap polutan, di mana peningkatan tekanan udara berkaitan dengan perubahan kadar SO2, NO2, dan CO.
+    Polutan memiliki keterkaitan yang cukup kuat satu sama lain, terutama CO yang berkorelasi tinggi dengan PM2.5 (0.77), PM10 (0.69), SO2 (0.52), dan NO2 (0.69), menunjukkan bahwa peningkatan CO berhubungan dengan peningkatan partikel polutan lainnya. Selain itu, NO2 memiliki korelasi signifikan dengan PM2.5 (0.66), PM10 (0.65), dan SO2 (0.49), mengindikasikan perannya dalam meningkatkan konsentrasi polutan. Hubungan erat juga terlihat antara PM2.5 dan PM10 (0.88), menegaskan keterkaitan tinggi antara kedua partikel tersebut.  
+
+    Faktor meteorologis berpengaruh terhadap polutan, seperti O3 yang berkorelasi dengan suhu udara (TEMP) sebesar 0.59, menunjukkan bahwa peningkatan suhu berkontribusi terhadap penipisan lapisan ozon. Selain itu, O3 juga memiliki hubungan dengan titik embun (DEWP) dan kecepatan angin (WSPM), yang berperan dalam penyebaran polutan di atmosfer. Sementara itu, tekanan udara (PRES) memengaruhi konsentrasi SO2, NO2, dan CO, mengindikasikan bahwa variasi tekanan udara berhubungan dengan akumulasi polutan di suatu wilayah.  
+
+    Di antara faktor meteorologis, suhu udara (TEMP) memiliki korelasi tinggi dengan titik embun (DEWP) sebesar 0.82, yang berarti saat suhu meningkat, titik embun juga cenderung naik. Sebaliknya, suhu memiliki korelasi negatif dengan tekanan udara (PRES) sebesar -0.81, menunjukkan bahwa peningkatan suhu umumnya diiringi oleh penurunan tekanan. Selain itu, tekanan udara juga memiliki korelasi negatif dengan titik embun (-0.75), yang menunjukkan bahwa saat tekanan lebih rendah, kelembapan udara meningkat.
 """)
 
 
-# membuat trend tahunan
+# membuat trend rata-rata tahunan
 st.subheader('Rata-Rata Tahunan Konsentrasi PM2.5 dan PM10')
 yearly_avg = create_yearly_trend(df)
 
@@ -107,7 +111,6 @@ sns.lineplot(
     linewidth=2,
     label='PM2.5'
 )
-# label sumbu
 plt.xlabel('')
 plt.ylabel('')
 plt.legend(title='Polutan', loc='upper right')
@@ -118,7 +121,7 @@ st.markdown("""
 """)
 
 
-# membuat trend bulanan
+# membuat trend rata-rata bulanan
 st.subheader('Rata-Rata Bulanan Konsentrasi PM2.5 dan PM10')
 monthly_df = create_monthly_trend(df)
 col1, col2 = st.columns(2)
@@ -139,7 +142,7 @@ with col1:
     plt.legend(loc='upper center', ncol=5, fontsize='small', columnspacing=1.0, handletextpad=0.5)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     st.pyplot(plt)
-
+# PM10
 with col2:
     colors = sns.color_palette("ch:start=.2,rot=-.3", as_cmap=True)
     plt.figure(figsize=(10, 6))
@@ -205,6 +208,7 @@ st.markdown("""
 
         Secara keseluruhan, tingginya konsentrasi PM2.5 dan PM10 dalam udara menunjukkan bahwa partikel-partikel ini berpotensi membahayakan kesehatan dan meningkatkan risiko gangguan pernapasan.
 """)
+
 
 
 # menampilkan stasiun dengan kualitas udara terburuk
@@ -273,6 +277,8 @@ st.markdown("""
 """)
 
 
+
+# kesimpulan
 st.markdown("""
         ### **Kesimpulan**
 
