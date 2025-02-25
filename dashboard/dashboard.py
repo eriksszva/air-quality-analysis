@@ -114,6 +114,7 @@ sns.lineplot(
 plt.xlabel('')
 plt.ylabel('')
 plt.legend(title='Polutan', loc='upper right')
+plt.ylim(0, None)
 plt.grid(True, linestyle='--', alpha=0.7)
 st.pyplot(plt)
 st.markdown("""
